@@ -10,8 +10,8 @@ using PostgramAPI.Data;
 namespace PostgramAPI.Migrations
 {
     [DbContext(typeof(PostgramDbContext))]
-    [Migration("20250717113751_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20250718111745_AddImage")]
+    partial class AddImage
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,10 @@ namespace PostgramAPI.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -103,11 +107,18 @@ namespace PostgramAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Age")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Bio")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProfilePic")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

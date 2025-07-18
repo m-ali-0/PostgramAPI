@@ -22,6 +22,10 @@ namespace PostgramAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -100,11 +104,18 @@ namespace PostgramAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Age")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Bio")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProfilePic")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
