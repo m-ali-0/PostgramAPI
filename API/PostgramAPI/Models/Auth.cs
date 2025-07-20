@@ -10,6 +10,5 @@ public class Auth
     public string PasswordHash { get; set; }
 
     public int UserId { get; set; }
-    [JsonIgnore]
-    public User User { get; set; }
+    [JsonIgnore] public User User { get; set; }
 }

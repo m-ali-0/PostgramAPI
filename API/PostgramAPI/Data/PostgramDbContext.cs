@@ -13,8 +13,7 @@ public class PostgramDbContext : DbContext
     DbSet<Post> Posts { get; set; }
     public DbSet<Category> Categories { get; set; }
     DbSet<Auth> Auths { get; set; }
-    
-    
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -22,11 +21,11 @@ public class PostgramDbContext : DbContext
             .HasOne(u => u.Auth)
             .WithOne(a => a.User)
             .HasForeignKey<Auth>(a => a.UserId);
-        
+
         modelBuilder.Entity<Auth>()
-            .HasIndex(a=>a.UserName)
+            .HasIndex(a => a.UserName)
             .IsUnique();
-        
+
         modelBuilder.Entity<PostCategoryRelation>()
             .HasKey(pc => new { pc.PostId, pc.CategoryId });
 
@@ -34,11 +33,10 @@ public class PostgramDbContext : DbContext
             .HasOne(pc => pc.Post)
             .WithMany(p => p.PostCategoryRelations)
             .HasForeignKey(pc => pc.PostId);
-        
+
         modelBuilder.Entity<PostCategoryRelation>()
             .HasOne(pc => pc.Category)
             .WithMany(c => c.PostCategoryRelations)
             .HasForeignKey(pc => pc.CategoryId);
-
     }
 }

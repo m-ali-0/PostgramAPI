@@ -2,43 +2,44 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PostgramAPI.Data;
+using PostgramAPI.DTOs;
 
 namespace PostgramAPI.Services;
 
-public class AuthServices
+public class AuthServices : IAuthServices
 {
     private readonly IConfiguration _configuration;
     private readonly PostgramDbContext _context;
+    private readonly PasswordHelperServices _passwordHelperServices;
 
-    public AuthServices(IConfiguration configuration, PostgramDbContext context)
+    public AuthServices(IConfiguration configuration, PostgramDbContext context,
+        PasswordHelperServices passwordHelperServices)
     {
         _configuration = configuration;
         _context = context;
-    }
-    public static string HassPassword(string password)
-    {
-        return Convert.ToBase64String(System
-            .Text.Encoding.UTF8.GetBytes(password));
+        _passwordHelperServices = passwordHelperServices;
     }
 
-    public static string GenerateToken(string username)
+    public async Task<string> Login(LoginDto login)
     {
-        var claims = new[]
+        var user = await _context.Users
+            .Include(n => n.Auth)
+            .FirstOrDefaultAsync(n => n.Auth.UserName == login.UserName);
+        Console.WriteLine(user.DisplayName);
+        if (user == null || user.Auth == null || user.Auth.UserName == login.UserName)
         {
-            new Claim(ClaimTypes.Name, username)
-        };
-        var key = new SymmetricSecurityKey(Encoding
-            .UTF8.GetBytes(_configuration["Tokens:Key"]));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var token = new JwtSecurityToken(
-            issuer:  _configuration["Tokens:Issuer"],
-            audience: _configuration["Tokens:Audience"],
-            claims: claims,
-            
-            expires: DateTime.Now.AddMinutes(30),
-            signingCredentials: creds);
-        return new JwtSecurityTokenHandler().WriteToken(token);
+            throw new UnauthorizedAccessException("User not found");
+        }
+
+        var inputHash = _passwordHelperServices.HassPassword(login.Password);
+        if (user.Auth.PasswordHash != inputHash)
+        {
+            throw new UnauthorizedAccessException("Invalid password");
+        }
+
+        return _passwordHelperServices.GenerateToken(user.Auth.UserName);
     }
 }

@@ -1,38 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PostgramAPI.Data;
-using PostgramAPI.DTOs;
-using PostgramAPI.Models;
+using PostgramAPI.Services;
 
 namespace PostgramAPI.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
 public class CategoryController : ControllerBase
 {
-    private readonly PostgramDbContext _context;
+    private readonly CategoryServices _categoryServices;
 
-    public CategoryController(PostgramDbContext context)
+    public CategoryController(CategoryServices categoryServices)
     {
-        _context = context;
+        _categoryServices = categoryServices;
     }
 
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var categories = await _context.Categories
-            .Select(n => new CategoryDto()
-            {
-                Id = n.Id,
-                Name = n.Name
-            }).ToListAsync();
+        var categories = await _categoryServices.GetAllCategories();
         return Ok(categories);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-        var category = await _context.Categories
-            .FirstOrDefaultAsync<Category>(c=>c.Id == id);
+        var category = await _categoryServices.GetCategoryById(id);
         return Ok(category);
     }
 }

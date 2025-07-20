@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PostgramAPI.Data;
+using PostgramAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddDbContext<PostgramDbContext>(options => 
+builder.Services.AddDbContext<PostgramDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddAuthentication(options =>
     {
@@ -34,8 +35,15 @@ builder.Services.AddAuthentication(options =>
         };
     });
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<UserServices>();
+builder.Services.AddScoped<IAuthServices, AuthServices>();
+builder.Services.AddScoped<PasswordHelperServices>();
+builder.Services.AddScoped<PostServices>();
+builder.Services.AddScoped<CategoryServices>();
+// builder.Services.AddScoped<AuthServices>();
 
 var app = builder.Build();
+app.UseMiddleware<ErrorHandler>();
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -49,6 +57,4 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 
-
 app.Run();
-

@@ -7,35 +7,22 @@ using PostgramAPI.Models;
 using PostgramAPI.Services;
 
 namespace PostgramAPI.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
-
 public class AuthController : ControllerBase
 {
-    private readonly IConfiguration _configuration;
-    private readonly PostgramDbContext _context;
+    private readonly IAuthServices _authServices;
 
-    public AuthController(IConfiguration configuration, PostgramDbContext context)
+    public AuthController(IAuthServices authServices)
     {
-        _configuration = configuration;
-        _context = context;
+        _authServices = authServices;
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto login)
     {
-        var user = await _context.Users
-            .FirstOrDefaultAsync(u => u.Auth.UserName == login.UserName);
-        if (user == null)
-        {
-            return Unauthorized("Invalid username or password");
-        }
-        
-        var inputHash = AuthServices.HassPassword(login.Password);
-        if (user.Auth.PasswordHash != inputHash)
-        {
-            return Unauthorized("Invalid username or password");
-        }
-        var token = AuthServices.GenerateToken(user.Auth.UserName);
+        var token = await _authServices.Login(login);
+        return Ok(token);
     }
 }

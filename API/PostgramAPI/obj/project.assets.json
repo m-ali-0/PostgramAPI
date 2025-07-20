@@ -8832,32 +8832,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ali_mehdizada\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/alimehdizada/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ali_mehdizada\\Desktop\\API2\\PostgramAPI\\API\\PostgramAPI\\PostgramAPI.csproj",
+      "projectUniqueName": "/Users/alimehdizada/Mali/git-files/PostgramAPI/API/PostgramAPI/PostgramAPI.csproj",
       "projectName": "PostgramAPI",
-      "projectPath": "C:\\Users\\ali_mehdizada\\Desktop\\API2\\PostgramAPI\\API\\PostgramAPI\\PostgramAPI.csproj",
-      "packagesPath": "C:\\Users\\ali_mehdizada\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ali_mehdizada\\Desktop\\API2\\PostgramAPI\\API\\PostgramAPI\\obj\\",
+      "projectPath": "/Users/alimehdizada/Mali/git-files/PostgramAPI/API/PostgramAPI/PostgramAPI.csproj",
+      "packagesPath": "/Users/alimehdizada/.nuget/packages/",
+      "outputPath": "/Users/alimehdizada/Mali/git-files/PostgramAPI/API/PostgramAPI/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\ali_mehdizada\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/alimehdizada/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -8936,7 +8928,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
