@@ -4,7 +4,7 @@ using PostgramAPI.DTOs;
 
 namespace PostgramAPI.Services;
 
-public class CategoryServices
+public class CategoryServices : ICategoryServices
 {
     private readonly PostgramDbContext _context;
 

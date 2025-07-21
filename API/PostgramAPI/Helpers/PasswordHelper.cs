@@ -3,22 +3,22 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace PostgramAPI.Services;
+namespace PostgramAPI.Helpers;
 
-public class PasswordHelperServices
+public class PasswordHelper
 {
     private readonly IConfiguration _configuration;
 
-    public PasswordHelperServices(IConfiguration configuration)
+    public PasswordHelper(IConfiguration configuration)
     {
         _configuration = configuration;
     }
 
-    public string HassPassword(string password)
-    {
-        return Convert.ToBase64String(System
-            .Text.Encoding.UTF8.GetBytes(password));
-    }
+    // public string HassPassword(string password)
+    // {
+    //     return Convert.ToBase64String(System
+    //         .Text.Encoding.UTF8.GetBytes(password));
+    // }
 
     public string GenerateToken(string username)
     {

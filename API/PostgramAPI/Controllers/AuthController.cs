@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PostgramAPI.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using PostgramAPI.DTOs;
-using PostgramAPI.Models;
 using PostgramAPI.Services;
 
 namespace PostgramAPI.Controllers;

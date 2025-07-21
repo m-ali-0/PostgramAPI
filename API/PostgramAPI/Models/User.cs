@@ -1,4 +1,6 @@
-﻿namespace PostgramAPI.Models;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace PostgramAPI.Models;
 
 public class User
 {
@@ -10,5 +12,5 @@ public class User
 
 
     public Auth Auth { get; set; }
-    public ICollection<Post> Posts { get; set; }
+    public List<Post> Posts { get; set; }
 }

@@ -1,10 +1,12 @@
-﻿using PostgramAPI.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PostgramAPI.DTOs;
 
 public class CreatePostRequest
 {
-    public string PostURL { get; set; }
-
-    public ICollection<Category> Categories { get; set; }
+    public string Content { get; set; }
+    public string Title { get; set; }
+    public List<string> Categories { get; set; }
+    [Required]
+    public int UserId { get; set; }
 }

@@ -7,9 +7,9 @@ namespace PostgramAPI.Controllers;
 [Route("api/[controller]")]
 public class CategoryController : ControllerBase
 {
-    private readonly CategoryServices _categoryServices;
+    private readonly ICategoryServices _categoryServices;
 
-    public CategoryController(CategoryServices categoryServices)
+    public CategoryController(ICategoryServices categoryServices)
     {
         _categoryServices = categoryServices;
     }

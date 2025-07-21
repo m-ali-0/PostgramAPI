@@ -1,10 +1,5 @@
-﻿using HashLibrary;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using PostgramAPI.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using PostgramAPI.DTOs;
-using PostgramAPI.Models;
-using Microsoft.AspNetCore.Identity;
 using PostgramAPI.Services;
 
 namespace PostgramAPI.Controllers;
@@ -13,9 +8,9 @@ namespace PostgramAPI.Controllers;
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly UserServices _userServices;
+    private readonly IUserServices _userServices;
 
-    public UserController(UserServices userServices)
+    public UserController(IUserServices userServices)
     {
         _userServices = userServices;
     }

@@ -10,9 +10,9 @@ public class PostgramDbContext : DbContext
     }
 
     public DbSet<User> Users { get; set; }
-    DbSet<Post> Posts { get; set; }
+    public DbSet<Post> Posts { get; set; }
     public DbSet<Category> Categories { get; set; }
-    DbSet<Auth> Auths { get; set; }
+    public DbSet<Auth> Auths { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

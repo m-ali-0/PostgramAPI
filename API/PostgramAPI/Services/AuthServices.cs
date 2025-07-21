@@ -2,10 +2,13 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PostgramAPI.Data;
 using PostgramAPI.DTOs;
+using PostgramAPI.Helpers;
+using PostgramAPI.Models;
 
 namespace PostgramAPI.Services;
 
@@ -13,33 +16,36 @@ public class AuthServices : IAuthServices
 {
     private readonly IConfiguration _configuration;
     private readonly PostgramDbContext _context;
-    private readonly PasswordHelperServices _passwordHelperServices;
+    private readonly PasswordHelper _passwordHelper;
+    private readonly UserManager<Auth> _userManager;
+    private readonly SignInManager<Auth> _signInManager;
+
 
     public AuthServices(IConfiguration configuration, PostgramDbContext context,
-        PasswordHelperServices passwordHelperServices)
+        PasswordHelper passwordHelper,
+        UserManager<Auth> userManager,
+        SignInManager<Auth> signInManager)
     {
         _configuration = configuration;
         _context = context;
-        _passwordHelperServices = passwordHelperServices;
+        _passwordHelper = passwordHelper;
+        _userManager = userManager;
+        _signInManager = signInManager;
     }
 
     public async Task<string> Login(LoginDto login)
     {
-        var user = await _context.Users
-            .Include(n => n.Auth)
-            .FirstOrDefaultAsync(n => n.Auth.UserName == login.UserName);
-        Console.WriteLine(user.DisplayName);
-        if (user == null || user.Auth == null || user.Auth.UserName == login.UserName)
+        var user = await _userManager.FindByNameAsync(login.UserName);
+
+        Console.WriteLine(user.UserName);
+
+        var result = await _signInManager.CheckPasswordSignInAsync(
+            user, login.Password, lockoutOnFailure: false);
+        if (result.Succeeded)
         {
-            throw new UnauthorizedAccessException("User not found");
+            return _passwordHelper.GenerateToken(user.UserName);
         }
 
-        var inputHash = _passwordHelperServices.HassPassword(login.Password);
-        if (user.Auth.PasswordHash != inputHash)
-        {
-            throw new UnauthorizedAccessException("Invalid password");
-        }
-
-        return _passwordHelperServices.GenerateToken(user.Auth.UserName);
+        return null;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PostgramAPI.Data;
 using PostgramAPI.DTOs;
 using PostgramAPI.Services;
 
@@ -9,9 +8,9 @@ namespace PostgramAPI.Controllers;
 [Route("api/[controller]")]
 public class PostController : ControllerBase
 {
-    private readonly PostServices _postServices;
+    private readonly IPostServices _postServices;
 
-    public PostController(PostServices postServices)
+    public PostController(IPostServices postServices)
     {
         _postServices = postServices;
     }
@@ -20,11 +19,11 @@ public class PostController : ControllerBase
     public async Task<IActionResult> Post(CreatePostRequest request)
     {
         var post = await _postServices.CreatePost(request);
-        return Ok(post);
+        return Created(post.Id.ToString(), post);
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAllPosts(int? categoryId, int? userId)
     {
         var posts = await _postServices.GetAllPosts();
         return Ok(posts);
@@ -40,14 +39,14 @@ public class PostController : ControllerBase
     [HttpGet("user/{id}")]
     public async Task<IActionResult> GetByUserId(int id)
     {
-        var posts = await _postServices.GetPostByUserId(id);
+        var posts = await _postServices.GetPostsByUserId(id);
         return Ok(posts);
     }
 
     [HttpGet("category/{id}")]
     public async Task<IActionResult> GetByCategoryId(int id)
     {
-        var posts = await _postServices.GetPostByCategoryId(id);
+        var posts = await _postServices.GetPostsByCategoryId(id);
         return Ok(posts);
     }
 }
