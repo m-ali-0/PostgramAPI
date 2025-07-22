@@ -516,3 +516,5 @@ C:\Users\ali_mehdizada\Desktop\proj\PostgramAPI\API\PostgramAPI\bin\Debug\net9.0
 C:\Users\ali_mehdizada\Desktop\proj\PostgramAPI\API\PostgramAPI\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\ali_mehdizada\Desktop\proj\PostgramAPI\API\PostgramAPI\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\ali_mehdizada\Desktop\proj\PostgramAPI\API\PostgramAPI\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\ali_mehdizada\Desktop\proj\PostgramAPI\API\PostgramAPI\bin\Debug\net9.0\AutoMapper.dll
+C:\Users\ali_mehdizada\Desktop\proj\PostgramAPI\API\PostgramAPI\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

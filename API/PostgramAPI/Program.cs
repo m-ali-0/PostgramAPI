@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using PostgramAPI.Data;
 using PostgramAPI.Helpers;
 using PostgramAPI.Models;
+using PostgramAPI.Profiles;
 using PostgramAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<PostgramDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+
 builder.Services.AddIdentity<Auth, IdentityRole>(options =>
     {
         // Password settings
@@ -31,7 +34,7 @@ builder.Services.AddIdentity<Auth, IdentityRole>(options =>
         options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
         options.Lockout.MaxFailedAccessAttempts = 5;
         // User settings
-        options.User.RequireUniqueEmail = true;
+        options.User.RequireUniqueEmail = false;
     })
     .AddEntityFrameworkStores<PostgramDbContext>()
     .AddDefaultTokenProviders();
@@ -58,17 +61,19 @@ builder.Services.AddAuthentication(options =>
     });
 
 builder.Services.AddAuthorization();
-builder.Services.AddScoped<IUserServices, UserServices>();
-builder.Services.AddScoped<IAuthServices, AuthServices>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 builder.Services.AddScoped<PasswordHelper>();
-builder.Services.AddScoped<IPostServices, PostServices>();
-builder.Services.AddScoped<ICategoryServices, CategoryServices>();
-builder.Services.AddScoped<PasswordHasher<Auth>>();
+
+// builder.Services.AddScoped<PasswordHasher<Auth>>();
 // builder.Services.AddScoped<AuthServices>();
 
 var app = builder.Build();
 
-app.UseMiddleware<ErrorHandler>();
+// app.UseMiddleware<ErrorHandler>();
 app.UseAuthentication();
 app.UseAuthorization();
 

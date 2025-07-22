@@ -25,18 +25,19 @@ public class PostgramDbContext : DbContext
         modelBuilder.Entity<Auth>()
             .HasIndex(a => a.UserName)
             .IsUnique();
+        
+        // modelBuilder.Entity<Post>()
+        //     .HasIndex(a=>a.Content)
+        //     .IsUnique();
 
         modelBuilder.Entity<PostCategoryRelation>()
             .HasKey(pc => new { pc.PostId, pc.CategoryId });
 
-        modelBuilder.Entity<PostCategoryRelation>()
-            .HasOne(pc => pc.Post)
-            .WithMany(p => p.PostCategoryRelations)
-            .HasForeignKey(pc => pc.PostId);
+        modelBuilder.Entity<Post>()
+            .HasMany(p => p.Categories)
+            .WithMany(c => c.Posts)
+            .UsingEntity<PostCategoryRelation>();
 
-        modelBuilder.Entity<PostCategoryRelation>()
-            .HasOne(pc => pc.Category)
-            .WithMany(c => c.PostCategoryRelations)
-            .HasForeignKey(pc => pc.CategoryId);
+        
     }
 }

@@ -10,7 +10,8 @@ public class Post
 
 
     public int UserId { get; set; }
-    [JsonIgnore] public User User { get; set; }
+    public User User { get; set; }
 
-    public List<PostCategoryRelation> PostCategoryRelations { get; set; }
+    // public List<PostCategoryRelation> PostCategoryRelations { get; set; }
+    public List<Category> Categories { get; set; }
 }

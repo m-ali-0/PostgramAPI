@@ -1,9 +1,11 @@
-﻿namespace PostgramAPI.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace PostgramAPI.Models;
 
 public class PostCategoryRelation
 {
     public int PostId { get; set; }
-    public Post Post { get; set; }
+    [JsonIgnore] public Post Post { get; set; }
     public int CategoryId { get; set; }
-    public Category Category { get; set; }
+    [JsonIgnore] public Category Category { get; set; }
 }

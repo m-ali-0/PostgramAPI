@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PostgramAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b57585b38437bb50b9e02c1cde7587264ec1c3e4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+53081428b4ae9f63902140d89c93a0ff3e762984")]
 [assembly: System.Reflection.AssemblyProductAttribute("PostgramAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PostgramAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
