@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace PostgramAPI.Models;
+﻿namespace PostgramAPI.Models;
 
 public class Post
 {
@@ -12,6 +10,5 @@ public class Post
     public int UserId { get; set; }
     public User User { get; set; }
 
-    // public List<PostCategoryRelation> PostCategoryRelations { get; set; }
     public List<Category> Categories { get; set; }
 }

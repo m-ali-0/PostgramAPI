@@ -1,5 +1,4 @@
 ﻿using PostgramAPI.DTOs;
-using PostgramAPI.Models;
 
 namespace PostgramAPI.Services;
 

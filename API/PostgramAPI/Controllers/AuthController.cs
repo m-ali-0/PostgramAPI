@@ -18,14 +18,18 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> CreateAuth([FromBody] CreateAuthRequest request)
     {
-        var auth = _authService.Create(request);
-        return Ok(auth);
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        
+        _authService.Create(request);
+        return NoContent();
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto login)
     {
         var token = await _authService.Login(login);
-        return Ok(token);
+        if (token == null) return Unauthorized("Invalid username or password");
+
+        return Ok(new { token });
     }
 }

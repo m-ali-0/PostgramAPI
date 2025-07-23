@@ -8,5 +8,4 @@ public class Category
     public string Name { get; set; }
 
     [JsonIgnore] public List<Post> Posts { get; set; }
-    // public List<PostCategoryRelation> PostCategoryRelations { get; set; }
 }

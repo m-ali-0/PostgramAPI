@@ -19,28 +19,28 @@ public class UsersController : ControllerBase
 
     [HttpPut("update")]
     [Authorize]
-    public async Task<IActionResult> UpdateUser([FromBody] CreateUserRequest request)
+    public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request)
     {
         var claim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (claim == null)
         {
             return Unauthorized("Unauthorized");
         }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         var userId = int.Parse(claim.Value);
-        var user = _userService.UpdateUserDetails(request, userId);
-        return Ok(user);
+        _userService.UpdateUserDetails(request, userId);
+        return Ok("User details updated");
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Post([FromBody] CreateUserRequest request)
-    {
-        var user = _userService.PostUser(request);
-        return Ok(user);
-    }
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> GetAllUsers()
     {
         var users = await _userService.GetAllUsers();
         return Ok(users);
@@ -48,7 +48,7 @@ public class UsersController : ControllerBase
 
     [HttpGet("{id}")]
     [Authorize]
-    public async Task<IActionResult> Get(int id)
+    public async Task<IActionResult> GetUserById(int id)
     {
         var user = await _userService.GetUserById(id);
         return Ok(user);

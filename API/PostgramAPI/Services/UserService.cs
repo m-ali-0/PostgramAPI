@@ -1,50 +1,35 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using PostgramAPI.Data;
 using PostgramAPI.DTOs;
-using PostgramAPI.Helpers;
-using PostgramAPI.Models;
 
 namespace PostgramAPI.Services;
 
 public class UserService : IUserService
-    
+
 {
     private readonly PostgramDbContext _context;
-    private readonly UserManager<Auth> _userManager;
     private readonly IMapper _mapper;
     private readonly ILogger<IUserService> _logger;
 
     public UserService(
-        PostgramDbContext context, 
-        UserManager<Auth> userManager,
+        PostgramDbContext context,
         IMapper mapper,
         ILogger<IUserService> logger)
     {
         _context = context;
-        _userManager = userManager;
         _mapper = mapper;
         _logger = logger;
     }
 
-    public async Task<User> PostUser(CreateUserRequest request)
+    public async Task<UserDto> UpdateUserDetails(UpdateUserRequest request, int userId)
     {
-        var user = _mapper.Map<User>(request);
-        _context.Users.Add(user);
-        await _context.SaveChangesAsync();
-        return user;
-    }
-
-    public async Task<User> UpdateUserDetails(CreateUserRequest request, int userId)
-    {
-        _logger.LogInformation("Updating User Details at {time}",  DateTime.Now);
+        _logger.LogInformation("Updating User Details at {time}", DateTime.Now);
         var user = await _context.Users.FindAsync(userId);
-        user = _mapper.Map(request,user);
-        _context.Users.Update(user!);
+        user = _mapper.Map(request, user);
+        _context.Users.Update(user);
         _context.SaveChanges();
-        return user;
+        return _mapper.Map<UserDto>(user!);
     }
 
     public async Task<List<UsersDto>> GetAllUsers()
@@ -59,6 +44,7 @@ public class UserService : IUserService
         var user = await _context.Users
             .Where(n => n.Id == id)
             .FirstOrDefaultAsync();
-        return _mapper.Map<UserDto>(user);;
+        return _mapper.Map<UserDto>(user);
+        ;
     }
 }

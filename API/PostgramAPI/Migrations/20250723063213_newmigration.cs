@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PostgramAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class init_migration : Migration
+    public partial class newmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,10 +30,10 @@ namespace PostgramAPI.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    DisplayName = table.Column<string>(type: "TEXT", nullable: false),
-                    Bio = table.Column<string>(type: "TEXT", nullable: false),
-                    Age = table.Column<int>(type: "INTEGER", nullable: false),
-                    ProfilePic = table.Column<string>(type: "TEXT", nullable: false)
+                    DisplayName = table.Column<string>(type: "TEXT", nullable: true),
+                    Bio = table.Column<string>(type: "TEXT", nullable: true),
+                    Age = table.Column<int>(type: "INTEGER", nullable: true),
+                    ProfilePic = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,24 +94,24 @@ namespace PostgramAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PostCategoryRelation",
+                name: "CategoryPost",
                 columns: table => new
                 {
-                    PostId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CategoryId = table.Column<int>(type: "INTEGER", nullable: false)
+                    CategoriesId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PostsId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostCategoryRelation", x => new { x.PostId, x.CategoryId });
+                    table.PrimaryKey("PK_CategoryPost", x => new { x.CategoriesId, x.PostsId });
                     table.ForeignKey(
-                        name: "FK_PostCategoryRelation_Categories_CategoryId",
-                        column: x => x.CategoryId,
+                        name: "FK_CategoryPost_Categories_CategoriesId",
+                        column: x => x.CategoriesId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PostCategoryRelation_Posts_PostId",
-                        column: x => x.PostId,
+                        name: "FK_CategoryPost_Posts_PostsId",
+                        column: x => x.PostsId,
                         principalTable: "Posts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -124,15 +124,9 @@ namespace PostgramAPI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Auths_UserName",
-                table: "Auths",
-                column: "UserName",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PostCategoryRelation_CategoryId",
-                table: "PostCategoryRelation",
-                column: "CategoryId");
+                name: "IX_CategoryPost_PostsId",
+                table: "CategoryPost",
+                column: "PostsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_UserId",
@@ -147,7 +141,7 @@ namespace PostgramAPI.Migrations
                 name: "Auths");
 
             migrationBuilder.DropTable(
-                name: "PostCategoryRelation");
+                name: "CategoryPost");
 
             migrationBuilder.DropTable(
                 name: "Categories");

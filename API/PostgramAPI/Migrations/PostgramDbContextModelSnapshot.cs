@@ -17,6 +17,21 @@ namespace PostgramAPI.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.7");
 
+            modelBuilder.Entity("CategoryPost", b =>
+                {
+                    b.Property<int>("CategoriesId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PostsId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("CategoriesId", "PostsId");
+
+                    b.HasIndex("PostsId");
+
+                    b.ToTable("CategoryPost");
+                });
+
             modelBuilder.Entity("PostgramAPI.Models.Auth", b =>
                 {
                     b.Property<string>("Id")
@@ -72,9 +87,6 @@ namespace PostgramAPI.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.HasIndex("UserName")
-                        .IsUnique();
-
                     b.ToTable("Auths");
                 });
 
@@ -117,45 +129,42 @@ namespace PostgramAPI.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("PostgramAPI.Models.PostCategoryRelation", b =>
-                {
-                    b.Property<int>("PostId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("PostId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("PostCategoryRelation");
-                });
-
             modelBuilder.Entity("PostgramAPI.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Age")
+                    b.Property<int?>("Age")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Bio")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("DisplayName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProfilePic")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("CategoryPost", b =>
+                {
+                    b.HasOne("PostgramAPI.Models.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PostgramAPI.Models.Post", null)
+                        .WithMany()
+                        .HasForeignKey("PostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PostgramAPI.Models.Auth", b =>
@@ -178,35 +187,6 @@ namespace PostgramAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PostgramAPI.Models.PostCategoryRelation", b =>
-                {
-                    b.HasOne("PostgramAPI.Models.Category", "Category")
-                        .WithMany("PostCategoryRelations")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PostgramAPI.Models.Post", "Post")
-                        .WithMany("PostCategoryRelations")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Post");
-                });
-
-            modelBuilder.Entity("PostgramAPI.Models.Category", b =>
-                {
-                    b.Navigation("PostCategoryRelations");
-                });
-
-            modelBuilder.Entity("PostgramAPI.Models.Post", b =>
-                {
-                    b.Navigation("PostCategoryRelations");
                 });
 
             modelBuilder.Entity("PostgramAPI.Models.User", b =>

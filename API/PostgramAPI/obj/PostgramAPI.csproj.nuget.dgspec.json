@@ -79,6 +79,10 @@
               "target": "Package",
               "version": "[2.3.0, )"
             },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.7, )"
@@ -101,9 +105,21 @@
               "target": "Package",
               "version": "[8.12.1, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "System.ComponentModel.Annotations": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[8.12.1, )"
+            },
+            "UoN.ExpressiveAnnotations.NetCore": {
+              "target": "Package",
+              "version": "[1.0.0, )"
             }
           },
           "imports": [

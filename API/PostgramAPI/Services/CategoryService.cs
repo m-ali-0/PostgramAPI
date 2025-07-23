@@ -2,7 +2,6 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PostgramAPI.Data;
 using PostgramAPI.DTOs;
-using PostgramAPI.Models;
 
 namespace PostgramAPI.Services;
 
@@ -13,8 +12,8 @@ public class CategoryService : ICategoryService
     private readonly ILogger<ICategoryService> _logger;
 
     public CategoryService(
-        PostgramDbContext context, 
-        IMapper mapper, 
+        PostgramDbContext context,
+        IMapper mapper,
         ILogger<ICategoryService> logger)
     {
         _context = context;
@@ -33,10 +32,9 @@ public class CategoryService : ICategoryService
 
     public async Task<List<CategoryDto>> GetAllCategories()
     {
-        _logger.LogInformation("Getting all categories at {Time}",DateTime.Now);
+        _logger.LogInformation("Getting all categories at {Time}", DateTime.Now);
         var categories = await _context.Categories
             .ToListAsync();
         return _mapper.Map<List<CategoryDto>>(categories);
     }
-    
 }

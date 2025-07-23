@@ -10,19 +10,19 @@ public class AutoMapperProfiles : Profile
     {
         CreateMap<Post, PostDto>();
         CreateMap<PostDto, Post>();
-        
+
         CreateMap<Category, CategoryDto>();
         CreateMap<CategoryDto, Category>();
-        
+
         CreateMap<UsersDto, User>();
         CreateMap<User, UsersDto>();
-        
+
         CreateMap<UserDto, User>();
         CreateMap<User, UserDto>();
 
-        CreateMap<User, CreateUserRequest>();
-        CreateMap<CreateUserRequest, User>();
-        
+        CreateMap<User, UpdateUserRequest>();
+        CreateMap<UpdateUserRequest, User>();
+
         CreateMap<CreatePostRequest, Post>();
     }
 }

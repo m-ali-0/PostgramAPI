@@ -11,10 +11,10 @@ using PostgramAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<PostgramDbContext>(options =>
@@ -25,8 +25,8 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddIdentity<Auth, IdentityRole>(options =>
     {
         // Password settings
-        options.Password.RequireDigit = false;
-        options.Password.RequireLowercase = false;
+        options.Password.RequireDigit = true;
+        options.Password.RequireLowercase = true;
         options.Password.RequireUppercase = false;
         options.Password.RequireNonAlphanumeric = false;
         options.Password.RequiredLength = 4;
@@ -68,16 +68,14 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddScoped<PasswordHelper>();
 
-// builder.Services.AddScoped<PasswordHasher<Auth>>();
-// builder.Services.AddScoped<AuthServices>();
 
 var app = builder.Build();
 
-// app.UseMiddleware<ErrorHandler>();
+app.UseMiddleware<ErrorHandler>();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

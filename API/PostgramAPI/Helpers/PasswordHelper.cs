@@ -18,7 +18,6 @@ public class PasswordHelper
     {
         var claims = new[]
         {
-            new Claim(ClaimTypes.Name, username),
             new Claim(ClaimTypes.NameIdentifier, userId.ToString())
         };
         var key = new SymmetricSecurityKey(Encoding
